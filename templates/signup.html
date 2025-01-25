@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'signup.css' %}">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo-section">
+            <h1>MediCare Plus</h1>
+            <h2>Join Our Medical Community</h2>
+        </div>
+        <form method="POST" enctype="multipart/form-data" id="signupForm">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group" id="div_{{ field.name }}">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error">
+                    {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Create Account</button>
+        </form>
+        
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Sign in here</a></p>
+        </div>
+    </div>
+
+    <script>
+        const accountTypeField = document.getElementById("id_account_type");
+        const specialityField = document.getElementById("div_speciality");
+
+        function toggleSpecialityField() {
+            if (accountTypeField && specialityField) {
+                if (accountTypeField.value === "doctor") {
+                    specialityField.classList.remove('hidden');
+                } else {
+                    specialityField.classList.add('hidden');
+                    const specialityInput = document.getElementById("id_speciality");
+                    if (specialityInput) {
+                        specialityInput.value = "";
+                    }
+                }
+            }
+        }
+
+        if (accountTypeField) {
+            accountTypeField.addEventListener("change", toggleSpecialityField);
+            // Initialize on page load
+            toggleSpecialityField();
+        }
+    </script>
+</body>
+</html>

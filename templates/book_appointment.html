@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Appointment - MedCare</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'book_appointment.css' %}" />
+    <link rel="stylesheet" href="{% static 'patient_nav.css' %}" />
+  </head>
+  <body>
+    <header>{% include 'patient_nav.html' %}</header>
+
+    <div class="dashboard-container">
+      <div class="welcome-section">
+        <h1>Book Appointment</h1>
+        <p>Schedule your consultation with Dr. {{ doctor.first_name }} {{ doctor.last_name }}</p>
+      </div>
+
+      <div class="appointment-card">
+        <div class="doctor-brief">
+          <div class="doctor-image">
+            <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" />
+          </div>
+          <div class="doctor-info">
+            <h3>{{ doctor.first_name }} {{ doctor.last_name }}</h3>
+            <p class="speciality">{{ doctor.speciality }}</p>
+          </div>
+        </div>
+
+        <form class="appointment-form" method="post">
+          {% csrf_token %}
+
+          <!-- Display general form errors -->
+          {% if form.non_field_errors %}
+          <div class="form-errors">
+            <ul>
+              {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <!-- Date Field -->
+          <div class="form-group">
+            {{ form.date.label_tag }}
+            {{ form.date }}
+            {% if form.date.errors %}
+            <div class="error-message">{{ form.date.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Start Time Field -->
+          <div class="form-group">
+            {{ form.start_time.label_tag }}
+            {{ form.start_time }}
+            {% if form.start_time.errors %}
+            <div class="error-message">{{ form.start_time.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Reason Field -->
+          <div class="form-group">
+            {{ form.reason.label_tag }}
+            {{ form.reason }}
+            {% if form.reason.errors %}
+            <div class="error-message">{{ form.reason.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Notes Field -->
+          <div class="form-group">
+            {{ form.notes.label_tag }}
+            {{ form.notes }}
+            {% if form.notes.errors %}
+            <div class="error-message">{{ form.notes.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-btn">Confirm Appointment</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+

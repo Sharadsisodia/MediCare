@@ -1,0 +1,80 @@
+.navbar {
+    background: var(--card-background);
+    box-shadow: var(--shadow-md);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo::before {
+    content: '⚕';
+    font-size: 1.75rem;
+    animation: pulse 2s infinite;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+    background: var(--background-color);
+}
+
+.nav-links a.active {
+    color: var(--primary-color);
+    background: var(--background-color);
+}
+
+
+.badge {
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+}
+
+.logout {
+    color: #ef4444 !important;
+}
+
+.logout:hover {
+    background: #fef2f2 !important;
+}

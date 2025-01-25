@@ -1,0 +1,20 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointment-Conformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'patient_nav.css' %}">
+  </head>
+  <body>
+    <header>
+        {% include 'patient_nav.html' %}
+    </header>
+    <h2>Appointment Confirmed</h2>
+    <p>Doctor: {{ appointment.doctor.first_name }}</p>
+    <p>Date: {{ appointment.date }}</p>
+    <p>Time: {{ appointment.start_time }} - {{ appointment.end_time }}</p>
+  </body>
+</html>

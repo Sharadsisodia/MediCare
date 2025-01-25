@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upcoming Appointments - MedCare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'upcoming_appointments.css' %}" />
+    <link rel="stylesheet" href="{% static 'patient_nav.css' %}" />
+  </head>
+  <body>
+    <header>{% include 'patient_nav.html' %}</header>
+
+    <div class="dashboard-container">
+      <div class="welcome-section">
+        <h1>Upcoming Appointments</h1>
+        <p>Manage your scheduled consultations with our specialists</p>
+      </div>
+
+      <div class="appointments-card">
+        <div class="appointment-list">
+          {% for appointment in appointments %}
+          <div class="appointment-item">
+            <div class="appointment-doctor">
+              <div class="doctor-image">
+                <img src="{{ appointment.doctor.profile_picture.url }}" alt="{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}" />
+              </div>
+              <div class="doctor-info">
+                <h3>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</h3>
+                <p class="speciality">{{ appointment.doctor.speciality }}</p>
+                <span class="status upcoming">Upcoming</span>
+              </div>
+            </div>
+            <div class="appointment-details">
+              <div class="detail-row">
+                <span class="icon">📅</span>
+                <div>
+                  <label>Date & Time</label>
+                  <p>{{ appointment.date|date:"F d, Y" }} at {{ appointment.start_time|time:"h:i A" }}</p>
+                </div>
+              </div>
+              <div class="detail-row">
+                <span class="icon">🏥</span>
+                <div>
+                  <label>Reason</label>
+                  <p>{{ appointment.reason }}</p>
+                </div>
+              </div>
+              <div class="detail-row">
+                <span class="icon">📍</span>
+                <div>
+                  <label>Location</label>
+                  <p>Main Hospital, Room 205</p>
+                </div>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button class="reschedule-btn">Reschedule</button>
+              <form method="POST" action="{% url 'cancel_appointment' appointment.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="cancel-btn">Cancel</button>
+              </form>
+            </div>
+          </div>
+          {% empty %}
+          <p>No upcoming appointments.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

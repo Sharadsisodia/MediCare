@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Blog - MedCare</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'doctor_create_blog.css' %}">
+    <link rel="stylesheet" href="{% static 'doctor_nav.css' %}">
+  </head>
+  <body>
+    <header>{% include 'doctor_nav.html' %}</header>
+
+    <div class="dashboard-container">
+      <div class="welcome-section">
+        <h1>Create Blog Post</h1>
+        <p>Share your medical expertise and insights with our community</p>
+      </div>
+
+      <div class="draft-posts-section">
+        <h2>Your Draft Posts</h2>
+        <div class="draft-posts-grid">
+          {% for draft in draft_posts %}
+          <div class="draft-post-card">
+            <div class="draft-post-image">
+              <img src="{{ draft.featured_image.url }}" alt="{{ draft.get_category_display }}">
+              <span class="draft-category">{{ draft.get_category_display }}</span>
+            </div>
+            <div class="draft-post-content">
+              <h3>{{ draft.title }}</h3>
+              <p>{{ draft.summary|truncatewords:20 }}</p>
+              <div class="draft-post-meta">
+                <span class="draft-date">Last edited: {{ draft.updated_at|date:"M d, Y" }}</span>
+                <div class="draft-actions">
+                  <a href="{% url 'edit_blog_post' draft.id %}" class="edit-draft-btn">Edit</a>
+                  <form action="{% url 'delete_draft' draft.id %}" method="post" style="display: inline;" onsubmit="return confirmDelete(this);">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-draft-btn">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No draft posts found. Start creating a new blog post!</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="blog-form-card">
+        <form method="post" enctype="multipart/form-data" class="blog-form">
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+            <div class="text-danger">
+              {{ field.errors }}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+          <div class="form-actions">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="submit" class="publish-btn">Publish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Confirmation dialog for draft deletion
+      function confirmDelete(form) {
+        return confirm('Are you sure you want to delete this draft? This action cannot be undone.');
+      }
+    </script>
+  </body>
+</html>

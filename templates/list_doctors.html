@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List of Doctors - MedCare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'list_doctors.css' %}">
+      <link rel="stylesheet" href="{% static 'patient_nav.css' %}">
+  </head>
+  <body>
+    <header>
+        {% include 'patient_nav.html' %}
+    </header>
+
+    <div class="dashboard-container">
+      <div class="welcome-section">
+        <h1>Our Specialists</h1>
+        <p>Choose from our team of experienced healthcare professionals</p>
+      </div>
+
+      <div class="doctors-grid">
+        {% for doctor in doctors %}
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" />
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h3>
+            <p class="speciality">Speciality: {{ doctor.speciality }}</p>
+            <a href="{% url 'book_appointment' doctor.id %}" class="book-appointment">Book Appointment</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

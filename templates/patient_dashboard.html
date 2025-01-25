@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - MedCare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'patient_nav.css' %}">
+</head>
+<body>
+    <header>
+        {% include 'patient_nav.html' %}
+    </header>
+
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1>Welcome back, {{ user.first_name }}!</h1>
+            <p>Your health is our priority</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+                </div>
+                <button class="edit-profile-btn">
+                    ✏️ Edit Profile
+                </button>
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-group">
+                    <div class="detail-item">
+                        <label>Full Name</label>
+                        <p>{{ user.first_name }} {{ user.last_name }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Username</label>
+                        <p>{{ user.username }}</p>
+                    </div>
+                </div>
+
+                <div class="detail-group">
+                    <div class="detail-item">
+                        <label>Email</label>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Address</label>
+                        <p>{{ user.address_line1 }}<br>
+                            {{ user.city }}, {{ user.state }}<br>
+                            {{ user.pincode }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2 style="color: rgb(88, 179, 201);">Quick Actions</h2>
+            <div class="action-cards">
+                <a href="/doctors" class="action-card">
+                    <i>📅</i>
+                    <h3>Book Appointment</h3>
+                    <p>Schedule a consultation with our specialists</p>
+                </a>
+                <a href="#" class="action-card">
+                    <i>📁</i>
+                    <h3>Medical Records</h3>
+                    <p>View your medical history and reports</p>
+                </a>
+                <a href="#" class="action-card">
+                    <i>📝</i>
+                    <h3>Prescriptions</h3>
+                    <p>Access your current medications</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern CSS Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Hospital-themed color palette */
+            --primary-color: #2b8a9c;
+            --primary-dark: #1e6977;
+            --secondary-color: #64748b;
+            --accent-color: #41b3c4;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --background-color: #f0f9ff;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.2s;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #e5f3ff 100%);
+            color: var(--text-primary);
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Medical cross background pattern */
+        body::before {
+            content: '+';
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(43, 138, 156, 0.05);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: grid;
+            grid-template: repeat(20, 1fr) / repeat(20, 1fr);
+            z-index: 0;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 420px;
+            margin: 2rem;
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            padding: 2.5rem;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .signup-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo::before {
+            content: '⚕';
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -0.025em;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Icons for form fields */
+        .form-group label::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+        }
+
+        .form-group:nth-child(1) label::before {
+            content: '👤';
+        }
+
+        .form-group:nth-child(2) label::before {
+            content: '🔒';
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all var(--transition-speed);
+            background-color: var(--background-color);
+        }
+
+        input:hover {
+            border-color: var(--primary-color);
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(43, 138, 156, 0.1);
+            outline: none;
+            background-color: var(--card-background);
+        }
+
+        .error {
+            margin: 1rem 0;
+        }
+
+        .error p {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .error p::before {
+            margin-right: 0.5rem;
+        }
+
+        .error p[style*="color: red"] {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+        }
+
+        .error p[style*="color: red"]::before {
+            content: '⚠️';
+        }
+
+        .error p[style*="color: green"] {
+            background-color: #f0fdf4;
+            border: 1px solid #dcfce7;
+        }
+
+        .error p[style*="color: green"]::before {
+            content: '✅';
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '→';
+            opacity: 0;
+            position: absolute;
+            right: 1rem;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            padding-right: 2.5rem;
+        }
+
+        .btn-submit:hover::before {
+            opacity: 1;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        p {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #0f172a;
+                --card-background: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border-color: #334155;
+            }
+            
+            body::before {
+                color: rgba(241, 245, 249, 0.03);
+            }
+            
+            input {
+                background-color: #1e293b;
+                color: var(--text-primary);
+            }
+            
+            .error p[style*="color: red"] {
+                background-color: #451a1a;
+                border-color: #881337;
+            }
+            
+            .error p[style*="color: green"] {
+                background-color: #132e1a;
+                border-color: #166534;
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 480px) {
+            .signup-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .logo::before {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo"></div>
+        <h2>Medicare Plus<br>Hospital Portal Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+            {% if messages %}
+                <div class="error">
+                    {% for message in messages %}
+                        <p style="{% if message.tags == 'success' %}color: green;{% else %}color: red;{% endif %}">
+                            {{ message }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <button type="submit" class="btn-submit">Login to Portal</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,342 @@
+:root {
+    --primary-color: #2b8a9c;
+    --primary-dark: #1e6977;
+    --secondary-color: #64748b;
+    --accent-color: #41b3c4;
+    --background-color: #f0f9ff;
+    --card-background: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.2s;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, var(--background-color) 0%, #e5f3ff 100%);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  body::before {
+    content: '+';
+    position: fixed;
+    font-size: 2rem;
+    color: rgba(43, 138, 156, 0.05);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template: repeat(20, 1fr) / repeat(20, 1fr);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 6rem auto 2rem;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .welcome-section {
+    margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .welcome-section p {
+    color: var(--text-secondary);
+  }
+  
+  .appointments-card {
+    background: var(--card-background);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+    position: relative;
+  }
+  
+  .appointments-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  }
+  
+  .appointment-list {
+    padding: 1.5rem;
+  }
+  
+  .appointment-item {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--card-background);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    transition: all var(--transition-speed);
+    border: 1px solid var(--border-color);
+  }
+  
+  .appointment-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  
+  .appointment-doctor {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .doctor-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .doctor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .doctor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .doctor-info h3 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .doctor-info .speciality {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .status.upcoming {
+    background: #ecfdf5;
+    color: var(--success-color);
+  }
+  
+  .appointment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .detail-row .icon {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+  }
+  
+  .detail-row label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-row p {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .reschedule-btn, .cancel-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    width: 100%;
+  }
+  
+  .reschedule-btn {
+    background: var(--background-color);
+    color: var(--primary-color);
+  }
+  
+  .reschedule-btn:hover {
+    background: #e5f3ff;
+    transform: translateY(-1px);
+  }
+  
+  .cancel-btn {
+    background: #fee2e2;
+    color: var(--danger-color);
+  }
+  
+  .cancel-btn:hover {
+    background: #fecaca;
+    transform: translateY(-1px);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .appointment-item {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      text-align: center;
+    }
+  
+    .appointment-doctor {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .appointment-details {
+      align-items: center;
+    }
+  
+    .detail-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .action-buttons {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .dashboard-container {
+      padding: 0 1rem;
+    }
+  
+    .appointment-item {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #0f172a;
+      --card-background: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --border-color: #334155;
+    }
+    
+    body::before {
+      color: rgba(241, 245, 249, 0.03);
+    }
+  
+    .status.upcoming {
+      background: #064e3b;
+      color: #34d399;
+    }
+  
+    .reschedule-btn {
+      background: #1e293b;
+    }
+  
+    .reschedule-btn:hover {
+      background: #334155;
+    }
+  
+    .cancel-btn {
+      background: #450a0a;
+    }
+  
+    .cancel-btn:hover {
+      background: #7f1d1d;
+    }
+  }

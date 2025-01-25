@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Blogs - MedCare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient_blogs.css' %}">
+    <link rel="stylesheet" href="{% static 'patient_nav.css' %}">
+    <script>
+      // Function to toggle visibility of the full content
+      function toggleContent(blogId) {
+        var fullContent = document.getElementById('content-' + blogId);
+        var readMoreBtn = document.getElementById('read-more-' + blogId);
+        
+        if (fullContent.style.display === 'none') {
+          fullContent.style.display = 'block';
+          readMoreBtn.innerText = 'Read Less ←';
+        } else {
+          fullContent.style.display = 'none';
+          readMoreBtn.innerText = 'Read More →';
+        }
+      }
+
+      // Function to filter blogs by category
+      function filterByCategory() {
+        var selectedCategory = document.getElementById('category-filter').value;
+        var blogCards = document.querySelectorAll('.blog-card');
+
+        blogCards.forEach(function(card) {
+          var blogCategory = card.getAttribute('data-category');
+
+          // If category is "all" or the blog's category matches the selected category, show the card
+          if (selectedCategory === 'all' || selectedCategory === blogCategory) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    
+    <header>
+        {% include 'patient_nav.html' %}
+    </header>
+
+    <div class="dashboard-container">
+      <div class="welcome-section">
+        <div class="welcome-header">
+          <div>
+            <h1>Health & Wellness Blogs</h1>
+            <p>Stay informed with expert medical insights from our doctors</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-filters">
+        <div class="search-box">
+          <input type="text" placeholder="Search blogs by title or topic..." />
+        </div>
+        <select class="filter-select" id="category-filter" onchange="filterByCategory()">
+          <option value="all">All Categories</option>
+          <option value="health">Health</option>
+          <option value="wellness">Wellness</option>
+          <option value="technology">Technology</option>
+        </select>
+      </div>
+
+      <div class="blog-grid">
+        {% for blog_post in blog_posts %}
+        <article class="blog-card" data-category="{{ blog_post.category }}">
+          <div class="blog-image">
+            <img src="{{ blog_post.featured_image.url }}" alt="{{ blog_post.title }}" />
+          </div>
+          <div class="blog-content">
+            <span class="blog-category">{{ blog_post.category|title }}</span>
+            <h2>{{ blog_post.title }}</h2>
+            <p class="blog-excerpt">{{ blog_post.summary }}</p>
+            <div class="blog-meta">
+              <div class="doctor-info">
+                <img src="{{ blog_post.author.profile_picture.url }}" alt="{{ blog_post.author.username }}" />
+                <span>{{ blog_post.author.username }}</span>
+              </div>
+              <time>{{ blog_post.created_at|date:"M d, Y" }}</time>
+            </div>
+
+            <!-- Full content hidden initially -->
+            <div id="content-{{ blog_post.id }}" style="display: none;">
+              <p>{{ blog_post.content }}</p>
+            </div>
+            
+            <!-- "Read More" button -->
+            <a href="javascript:void(0);" id="read-more-{{ blog_post.id }}" class="read-more" onclick="toggleContent({{ blog_post.id }})">
+              Read More →
+            </a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
