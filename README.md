@@ -26,7 +26,7 @@ MediCare is a Django-based web application designed to simplify the process of m
 
 - **Backend**: Django (Python)
 - **Frontend**: HTML, CSS, JavaScript (with animations and effects)
-- **Database**: PostgreSQL
+- **Database**: SQLite (default, can be switched to other databases like PostgreSQL or MySQL)
 - **Integration**: Google Calendar API
 
 ## Installation
@@ -70,6 +70,36 @@ MediCare is a Django-based web application designed to simplify the process of m
 
 7. Open the application in your browser at `http://127.0.0.1:8000/`.
 
+## Cloudinary Integration
+
+1. **Install Required Packages**: Ensure you have `django-cloudinary-storage` installed.
+
+   ```bash
+   pip install django-cloudinary-storage
+   ```
+
+2. **Update **``: Add the following configurations:
+
+   ```python
+   CLOUDINARY_STORAGE = {
+       'CLOUD_NAME': '<your-cloudinary-cloud-name>',
+       'API_KEY': '<your-cloudinary-api-key>',
+       'API_SECRET': '<your-cloudinary-api-secret>',
+   }
+
+   DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+   ```
+
+3. **Environment Variables**: Store your `CLOUD_NAME`, `API_KEY`, and `API_SECRET` securely using a `.env` file or equivalent.
+
+4. **Usage in Models**: Update `models.ImageField` to work seamlessly with Cloudinary:
+
+   ```python
+   profile_picture = models.ImageField(upload_to='profile_pics/')
+   ```
+
+5. **Deploy Notes**: Ensure your deployed environment allows for `.env` files or other secure methods for providing API credentials.
+
 ## Usage
 
 - **Patients**: Register or log in to book appointments and view posts shared by doctors.
@@ -110,3 +140,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 **Author**: Sharad Sisodia
 
 Feel free to reach out for suggestions or feedback!
+
