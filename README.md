@@ -26,7 +26,7 @@ MediCare is a Django-based web application designed to simplify the process of m
 
 - **Backend**: Django (Python)
 - **Frontend**: HTML, CSS, JavaScript (with animations and effects)
-- **Database**: SQLite (default, can be switched to other databases like PostgreSQL or MySQL)
+- **Database**: PostgreSQL
 - **Integration**: Google Calendar API
 
 ## Installation
