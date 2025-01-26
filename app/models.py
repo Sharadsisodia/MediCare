@@ -75,7 +75,8 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    featured_image = models.ImageField(upload_to='blog_images/')
+    # featured_image = models.ImageField(upload_to='blog_images/')
+    featured_image = CloudinaryField("blog_images")
     summary = models.TextField(max_length=500)
     content = models.TextField()
     is_draft = models.BooleanField(default=True)
