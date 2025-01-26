@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .managers import CustomUserManager
+from cloudinary.models import CloudinaryField
 
 class CustomUser(AbstractUser):
     ACCOUNT_TYPE_CHOICES = [
@@ -12,7 +13,8 @@ class CustomUser(AbstractUser):
     account_type = models.CharField(
         max_length=7, choices=ACCOUNT_TYPE_CHOICES, default='patient'
     )
-    profile_picture = models.ImageField(upload_to='profile_pics', blank=True, null=True)
+    # profile_picture = models.ImageField(upload_to='profile_pics', blank=True, null=True)
+    profile_picture = CloudinaryField("profile_pics")
     address_line1 = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
