@@ -250,7 +250,7 @@ from .models import BlogPost
 
 @login_required
 def doctor_create_blog(request):
-    user=request.user
+    # user=request.user
     if request.method == 'POST':
         form = BlogPostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -278,7 +278,7 @@ def doctor_create_blog(request):
             date__gte=date.today()
         ).count()
 
-    upcoming_count = count_upcoming_appointments(user)
+    upcoming_count = count_upcoming_appointments(request.user)
 
     context = {
         'form': form,
