@@ -2,6 +2,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from datetime import datetime, timedelta
+import pytz
 
 def create_google_calendar_event(appointment):
     SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -10,28 +11,27 @@ def create_google_calendar_event(appointment):
     try:
         credentials = Credentials.from_authorized_user_file('token.json', SCOPES)
     except (FileNotFoundError, ValueError):
-        # If no valid credentials are found, perform the OAuth flow
+        # Perform OAuth flow if no valid credentials are found
         flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
         credentials = flow.run_local_server(port=0)
 
-        # Save the credentials for the next run
+        # Save the credentials for future use
         with open('token.json', 'w') as token_file:
             token_file.write(credentials.to_json())
 
     service = build('calendar', 'v3', credentials=credentials)
 
+    # Use a proper timezone and format start and end times
+    timezone = 'Asia/Kolkata'  # Update with your preferred timezone
+    start_time = f"{appointment.date}T{appointment.start_time}:00"
+    end_time = f"{appointment.date}T{appointment.end_time}:00"
+    
     # Create the event details
     event = {
         'summary': f"Appointment with {appointment.doctor.first_name}",
-        'start': {
-            'dateTime': f"{appointment.date}T{appointment.start_time}:00Z",
-            'timeZone': 'UTC',
-        },
-        'end': {
-            'dateTime': f"{appointment.date}T{appointment.end_time}:00Z",
-            'timeZone': 'UTC',
-        },
-        'attendees': [{'email': appointment.doctor.email}],
+        'start': {'dateTime': start_time, 'timeZone': timezone},
+        'end': {'dateTime': end_time, 'timeZone': timezone},
+        'attendees': [{'email': appointment.doctor.email}, {'email': appointment.patient.email}],
     }
 
     try:
@@ -40,7 +40,8 @@ def create_google_calendar_event(appointment):
         appointment.save()
         print(f"Event created: {event_result.get('htmlLink')}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while creating the event: {e}")
+
 
 
 
