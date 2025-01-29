@@ -7,40 +7,39 @@ import pytz
 def create_google_calendar_event(appointment):
     SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-    # Check if token.json exists (saved credentials)
+    # Load or perform OAuth flow
     try:
         credentials = Credentials.from_authorized_user_file('token.json', SCOPES)
     except (FileNotFoundError, ValueError):
-        # Perform OAuth flow if no valid credentials are found
         flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
         credentials = flow.run_local_server(port=0)
-
-        # Save the credentials for future use
         with open('token.json', 'w') as token_file:
             token_file.write(credentials.to_json())
 
     service = build('calendar', 'v3', credentials=credentials)
 
-    # Use a proper timezone and format start and end times
-    timezone = 'Asia/Kolkata'  # Update with your preferred timezone
+    timezone = 'Asia/Kolkata'
     start_time = f"{appointment.date}T{appointment.start_time}:00"
     end_time = f"{appointment.date}T{appointment.end_time}:00"
-    
-    # Create the event details
-    event = {
-        'summary': f"Appointment with {appointment.doctor.first_name}",
+
+    event_body = {
+        'summary': f"Appointment between {appointment.patient.first_name} and Dr. {appointment.doctor.first_name}",
         'start': {'dateTime': start_time, 'timeZone': timezone},
         'end': {'dateTime': end_time, 'timeZone': timezone},
-        'attendees': [{'email': appointment.doctor.email}, {'email': appointment.patient.email}],
+        'attendees': [
+            {'email': appointment.doctor.email},
+            {'email': appointment.patient.email},
+        ],
     }
 
     try:
-        event_result = service.events().insert(calendarId='primary', body=event).execute()
-        appointment.calendar_event_id = event_result.get('id')  # Save the event ID
+        event = service.events().insert(calendarId='primary', body=event_body).execute()
+        appointment.calendar_event_id = event.get('id')
         appointment.save()
-        print(f"Event created: {event_result.get('htmlLink')}")
+        print(f"Event created: {event.get('htmlLink')}")
     except Exception as e:
-        print(f"An error occurred while creating the event: {e}")
+        print(f"Error creating event: {e}")
+
 
 
 
