@@ -204,7 +204,8 @@ def book_appointment(request, doctor_id):
             # create_google_calendar_event(appointment)
 
             # Redirect or render a confirmation page
-            return render(request, 'upcoming_appointments', {'appointment': appointment})
+            # return render(request, 'upcoming_appointments', {'appointment': appointment})
+            return redirect('upcoming_appointments')
 
         else:
             # Debugging: Output the errors if the form is not valid
