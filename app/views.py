@@ -201,7 +201,7 @@ def book_appointment(request, doctor_id):
             appointment.save()
 
             # Optionally create a Google Calendar event for the appointment
-            create_google_calendar_event(appointment)
+            # create_google_calendar_event(appointment)
 
             # Redirect or render a confirmation page
             return render(request, 'upcoming_appointments', {'appointment': appointment})
@@ -228,10 +228,10 @@ def cancel_appointment(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
 
     # Try to delete the Google Calendar event
-    try:
-        delete_google_calendar_event(appointment)  # Assuming this utility function exists
-    except Exception as e:
-        print(f"Error deleting Google Calendar event: {e}")
+    # try:
+    #     delete_google_calendar_event(appointment)  # Assuming this utility function exists
+    # except Exception as e:
+    #     print(f"Error deleting Google Calendar event: {e}")
 
     # Delete the appointment from the database
     appointment.delete()
