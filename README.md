@@ -1,6 +1,6 @@
 # MediCare - Patient-Doctor Appointment Booking System
 
-MediCare is a Django-based web application designed to simplify the process of managing appointments between patients and doctors. It also provides a platform for doctors to share informative posts and content that patients can access. The system incorporates Google Calendar integration to ensure seamless scheduling.
+MediCare is a Django-based web application designed to simplify the process of managing appointments between patients and doctors. It also provides a platform for doctors to share informative posts and content that patients can access.
 
 ## Features
 
@@ -8,13 +8,11 @@ MediCare is a Django-based web application designed to simplify the process of m
 
 - **Appointment Booking**: Book appointments with available doctors.
 - **View Doctor Posts**: Access informative posts and updates shared by doctors.
-- **Google Calendar Integration**: Automatically add booked appointments to your Google Calendar for better time management.
 
 ### For Doctors
 
 - **Post Management**: Upload and manage posts or content to share with patients.
 - **Appointment Management**: View and manage appointments booked by patients.
-- **Calendar Sync**: Synchronize appointments with Google Calendar.
 
 ### General Features
 
@@ -26,8 +24,8 @@ MediCare is a Django-based web application designed to simplify the process of m
 
 - **Backend**: Django (Python)
 - **Frontend**: HTML, CSS, JavaScript (with animations and effects)
-- **Database**: SQLite (default, can be switched to other databases like PostgreSQL or MySQL)
-- **Integration**: Google Calendar API
+- **Database**: PostgreSQL
+- **Integration**: Cloudinary
 
 ## Installation
 
@@ -78,7 +76,7 @@ MediCare is a Django-based web application designed to simplify the process of m
    pip install django-cloudinary-storage
    ```
 
-2. **Update **``: Add the following configurations:
+2. **Update Settings**: Add the following configurations:
 
    ```python
    CLOUDINARY_STORAGE = {
@@ -140,4 +138,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 **Author**: Sharad Sisodia
 
 Feel free to reach out for suggestions or feedback!
-
