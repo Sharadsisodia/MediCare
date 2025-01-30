@@ -1,6 +1,6 @@
-# MediCare - Patient-Doctor Appointment Booking System
+# MedCare - Patient-Doctor Appointment Booking System
 
-MediCare is a Django-based web application designed to simplify the process of managing appointments between patients and doctors. It also provides a platform for doctors to share informative posts and content that patients can access.
+MedCare is a Django-based web application designed to simplify the process of managing appointments between patients and doctors. It also provides a platform for doctors to share informative posts and content that patients can access.
 
 ## Features
 
